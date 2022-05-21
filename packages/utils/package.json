@@ -22,5 +22,9 @@
   },
   "bugs": {
     "url": "https://github.com/ForestLizard/forest-cli-dev/issues"
-  }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "6482827d9a4198b6d349be141b3040bd4db432d7"
 }
