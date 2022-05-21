@@ -1,0 +1,29 @@
+{
+  "name": "@forest-cli-dev/core",
+  "version": "1.0.0",
+  "description": "> TODO: description",
+  "author": "Tyrion Liu <tyrionliu@lilith.com>",
+  "homepage": "https://github.com/ForestLizard/forest-cli-dev/tree/main/packages/core#readme",
+  "license": "ISC",
+  "main": "lib/core.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ForestLizard/forest-cli-dev.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/ForestLizard/forest-cli-dev/issues"
+  },
+  "dependencies": {
+    "@forest-cli-dev/utils": "1.0.0"
+  }
+}
