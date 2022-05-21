@@ -1,5 +1,6 @@
-40 error Error: Command failed with exit code 128: git push --follow-tags --no-verify --atomic origin master
-40 error remote: Permission to ForestLizard/forest-cli-dev.git denied to ForestLizard.
-40 error fatal: unable to access 'https://github.com/ForestLizard/forest-cli-dev.git/': The requested URL returned error: 403
-40 error     at makeError (/opt/homebrew/lib/node_modules/lerna/node_modules/execa/lib/error.js:60:11)
-40 error     at handlePromise (/opt/homebrew/lib/node_modules/lerna/node_modules/execa/index.js:118:26)
+42 error Error: Command failed with exit code 128: git tag v0.0.1 -m v0.0.1
+42 error fatal: tag 'v0.0.1' already exists
+42 error     at makeError (/opt/homebrew/lib/node_modules/lerna/node_modules/execa/lib/error.js:60:11)
+42 error     at handlePromise (/opt/homebrew/lib/node_modules/lerna/node_modules/execa/index.js:118:26)
+42 error     at processTicksAndRejections (internal/process/task_queues.js:95:5)
+42 error     at async Promise.all (index 0)
