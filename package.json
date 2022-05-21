@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ForestLizard/forest-cli-dev.git"
+    "url": "git+git@github.com:ForestLizard/forest-cli-dev.git"
   },
   "keywords": [],
   "author": "",
