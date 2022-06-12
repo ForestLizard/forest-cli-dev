@@ -1,6 +1,6 @@
 {
   "name": "@forest-cli-dev/core",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "> TODO: description",
   "author": "Tyrion Liu <tyrionliu@lilith.com>",
   "homepage": "https://github.com/ForestLizard/forest-cli-dev/tree/main/packages/core#readme",
@@ -27,7 +27,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@forest-cli-dev/utils": "^0.0.6"
+    "@forest-cli-dev/utils": "^0.0.7"
   },
   "gitHead": "6482827d9a4198b6d349be141b3040bd4db432d7"
 }
