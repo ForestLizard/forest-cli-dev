@@ -27,7 +27,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@forest-cli-dev/utils": "^0.0.5"
+    "@forest-cli-dev/utils": "0.0.5"
   },
   "gitHead": "6482827d9a4198b6d349be141b3040bd4db432d7"
 }

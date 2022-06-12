@@ -4,5 +4,5 @@ module.exports = core;
 
 function core() {
     // TODO
-    const b = 2
+    const b = 3
 }
