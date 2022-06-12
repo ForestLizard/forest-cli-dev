@@ -1,4 +1,4 @@
-38 error Error: Command failed with exit code 1: git add -- packages/utils/package.json packages/utils/package-lock.json packages/core/package.json packages/core/package-lock.json lerna.json
+38 error Error: Command failed with exit code 1: git add -- packages/core/package.json packages/core/package-lock.json packages/utils/package.json packages/utils/package-lock.json lerna.json
 38 error The following paths are ignored by one of your .gitignore files:
 38 error packages/core/package-lock.json
 38 error packages/utils/package-lock.json
