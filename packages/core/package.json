@@ -27,7 +27,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@forest-cli-dev/utils": "^0.0.7",
+    "@forest-cli-dev/utils": "^0.0.8",
     "import-local": "^3.1.0",
     "npmlog": "^6.0.2"
   },
