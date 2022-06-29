@@ -11,6 +11,7 @@ function core() {
     try{
         checkPackageVersion()
         checkNodeVersion()
+        checkRoot()
     }catch(e){
         log.error(e.message)
     }
@@ -26,4 +27,10 @@ const checkNodeVersion = () => {
     if(semver.lt(currentVersion, lowestVersion)){
         throw Error(colors.bgRed.green(`当前node版本过低，需要安装${lowestVersion}及以上版本`))
     }
+}
+
+const checkRoot = async () => {
+    const { rootCheck } = await import('root-check')
+    rootCheck()
+    log.info('uid', process.getuid())
 }
