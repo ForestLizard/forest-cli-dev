@@ -1,0 +1,29 @@
+{
+  "name": "@forest-cli-dev/init",
+  "version": "0.0.1",
+  "description": "> TODO: description",
+  "author": "Tyrion <tyrionliu@lilith>",
+  "homepage": "https://github.com/ForestLizard/forest-cli-dev/tree/main/packages/init#readme",
+  "license": "ISC",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "https://registry-cnpm.lilithgame.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ForestLizard/forest-cli-dev.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/ForestLizard/forest-cli-dev/issues"
+  }
+}
