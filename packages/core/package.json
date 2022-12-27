@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@forest-cli-dev/init": "^0.0.1",
-    "@forest-cli-dev/utils": "^0.2.0",
+    "@forest-cli-dev/utils": "^0.3.0",
     "@forest-cli-dev/package": "^0.0.1",
     "colors": "^1.4.0",
     "commander": "^9.4.1",

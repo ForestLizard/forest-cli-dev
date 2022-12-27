@@ -2,8 +2,10 @@
 
 const fs = require('fs')
 const path = require('path')
+const { execSync } = require('child_process');
 const npminstall = require('npminstall')
-const isObject = require('@forest-cli-dev/utils/lib/isObject')
+const semver = require('semver')
+const { isObject, getNpmVersions, log } = require('@forest-cli-dev/utils')
 // const formatPath = require('@forest-cli-dev/utils/lib/formatPath')
 
 class Package {
@@ -15,33 +17,66 @@ class Package {
         this.targetPath = targetPath
         this.storePath = storePath
         this.packageName = packageName
-        this.packageVersion = packageVersion
+        // 缓存中是否存在该包
+        this.exist = false
+        if(this.storePath){
+            this.exist = fs.existsSync(path.resolve(this.storePath, 'node_modules', this.packageName))
+            if(this.exist){
+                this.targetPath = path.resolve(this.storePath, 'node_modules', this.packageName)
+            }
+        }
+        
+        // this.packageVersion = packageVersion
     }
 
-    exist() {
-        // test()
-    }
 
     async install() {
+        if(!this.storePath){
+            throw Error('必须在缓存模式下使用')
+        }
         await npminstall({
             root: this.storePath,
             pkgs: [
                 {
                     name: this.packageName,
-                    version: this.packageVersion
                 },
             ],
         })
+        this.targetPath = path.resolve(this.storePath, './node_modules', this.packageName)
     }
 
-    getRootFilePath(targetPath) {
-        const pkgPath = path.resolve(targetPath, './package.json')
+    async checkNewestVersion(){
+        if(!this.storePath){
+            throw Error('必须在缓存模式下使用')
+        }
+        const [ newestVersion ] = await getNpmVersions(this.packageName)
+        const pkgPath = path.resolve(this.storePath, './node_modules', this.packageName, './package.json')
+        const pkg = require(pkgPath)
+        const { version } = pkg
+        log.info('newestVersion: ', newestVersion)
+        log.info('currentVersion: ', version)
+        return !semver.lt(version, newestVersion)
+    }
+
+    async update(){
+        log.info('updating...')
+        if(!this.storePath){
+            throw Error('必须在缓存模式下使用')
+        }
+        const pkgPath = path.resolve(this.storePath, 'node_modules', this.packageName)
+        execSync(`rm -rf ${pkgPath}`)
+        log.info('remove expired version success')
+        await this.npminstall()
+    }
+
+    getRootFilePath() {
+        const pkgPath = path.resolve(this.targetPath, './package.json')
         if (!fs.existsSync(pkgPath)) {
             return ''
         }
         const pkg = require(pkgPath)
         if (pkg && pkg.main) {
-            const rootPath = path.resolve(targetPath, pkg.main)
+            const rootPath = path.resolve(this.targetPath, pkg.main)
             return rootPath
         } else {
             return ''

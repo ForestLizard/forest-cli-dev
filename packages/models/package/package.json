@@ -27,9 +27,10 @@
     "url": "https://github.com/ForestLizard/forest-cli-dev/issues"
   },
   "dependencies": {
-    "@forest-cli-dev/utils": "^0.2.0",
+    "@forest-cli-dev/utils": "^0.3.0",
     "long": "^5.2.1",
     "npminstall": "^6.6.2",
-    "pkg-dir": "^7.0.0"
+    "pkg-dir": "^7.0.0",
+    "semver": "^7.3.8"
   }
 }

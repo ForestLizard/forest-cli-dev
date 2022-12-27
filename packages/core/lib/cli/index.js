@@ -1,7 +1,7 @@
 'use strict';
 const path = require('path')
 const fs = require('fs')
-const log = require('@forest-cli-dev/utils/lib/log')
+const { log } = require('@forest-cli-dev/utils')
 const init = require('@forest-cli-dev/init')
 const semver = require('semver')
 const colors = require('colors')
