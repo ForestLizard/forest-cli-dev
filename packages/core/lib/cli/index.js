@@ -2,8 +2,9 @@
 const path = require('path')
 const fs = require('fs')
 const { log } = require('@forest-cli-dev/utils')
-const init = require('@forest-cli-dev/init')
+// const init = require('@forest-cli-dev/init')
 const semver = require('semver')
+const rootCheck =require('root-check');
 const colors = require('colors')
 const commander = require('commander')
 const userhome = require('userhome')()
@@ -18,7 +19,7 @@ function core() {
     // TODO
     try {
         prepare()
-        // checkRoot()
+        rootCheck()
         registerCommand()
     } catch (e) {
         log.error(e.message)
@@ -51,11 +52,11 @@ const createCliHomePath = () => {
     process.env.CLI_HOME_PATH = cliHomePath
 }
 
-const checkRoot = async () => {
-    const { rootCheck } = await import('root-check')
-    rootCheck()
-    log.info('uid', process.getuid())
-}
+// const checkRoot = async () => {
+//     const { rootCheck } = await import('root-check')
+//     rootCheck()
+//     log.info('uid', process.getuid())
+// }
 
 const registerCommand = () => {
     program
@@ -98,18 +99,6 @@ const registerCommand = () => {
 
     program.parse(process.argv)
 
-
-    // const opts = program.opts()
-    // if(opts.debug) {
-    //     process.env.LOG_LEVEL = 'verbose'
-    //     log.level = process.env.LOG_LEVEL
-    //     log.verbose('verbose', 'debug 模式启动')
-    // }
-
-    // if(opts.targetPath) {
-    //     console.log('dd', opts.targetPath)
-    //     process.env.CLI_TARGET_PATH = opts.targetPath
-    // }
 }
 
 module.exports = core;

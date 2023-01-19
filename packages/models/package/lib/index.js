@@ -41,6 +41,9 @@ class Package {
                     name: this.packageName,
                 },
             ],
+            registry: 'https://registry.npmjs.org',
+            // storeDir: path.resolve(this.storePath, './node_modules', this.packageName, './node_modules'),
+            // targetDir: this.storePath
         })
         this.targetPath = path.resolve(this.storePath, './node_modules', this.packageName)
     }
@@ -50,11 +53,11 @@ class Package {
             throw Error('必须在缓存模式下使用')
         }
         const [ newestVersion ] = await getNpmVersions(this.packageName)
-        const pkgPath = path.resolve(this.storePath, './node_modules', this.packageName, './package.json')
+        const pkgPath = path.resolve(this.storePath, './node_modules', this.packageName, './package.json') // 读的是软连接
         const pkg = require(pkgPath)
         const { version } = pkg
-        log.info('newestVersion: ', newestVersion)
-        log.info('currentVersion: ', version)
+        log.info(`${this.packageName} newestVersion: `, newestVersion)
+        log.info(`${this.packageName} currentVersion: `, version)
         return !semver.lt(version, newestVersion)
     }
 
@@ -62,7 +65,7 @@ class Package {
         log.info('updating...')
         if(!this.storePath){
             throw Error('必须在缓存模式下使用')
-        }
+        } 
         const pkgPath = path.resolve(this.storePath, 'node_modules', this.packageName)
         execSync(`rm -rf ${pkgPath}`)
         log.info('remove expired version success')

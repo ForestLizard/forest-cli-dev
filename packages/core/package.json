@@ -29,13 +29,12 @@
     "access": "public"
   },
   "dependencies": {
-    "@forest-cli-dev/init": "^0.0.1",
-    "@forest-cli-dev/utils": "^0.3.0",
     "@forest-cli-dev/package": "^0.0.1",
+    "@forest-cli-dev/utils": "^0.3.0",
     "colors": "^1.4.0",
     "commander": "^9.4.1",
     "import-local": "^3.1.0",
-    "root-check": "^2.0.0",
+    "root-check": "1.0.0",
     "semver": "^7.3.7",
     "userhome": "^1.0.0"
   },

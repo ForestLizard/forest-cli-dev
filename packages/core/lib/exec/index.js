@@ -3,13 +3,13 @@ const fs = require('fs')
 const cp = require('child_process')
 const Package = require('@forest-cli-dev/package')
 
-const { log } = require('@forest-cli-dev/utils')
+const { log, spawn } = require('@forest-cli-dev/utils')
 
 const PACKAGE_NAME_SETTING = {
   'init': '@forest-cli-dev/init'
 }
 
-const DEPENDS_PATH = './dependences'
+const TEMPLATE_PATH = './dependences'
 
 function getSimpleArgs(args) {
   const simpleArgs = args.slice(0, args.length - 1)
@@ -26,12 +26,12 @@ function getSimpleArgs(args) {
 }
 
 
-function spawn(cmd, args, options){
-  const isWin32 = process.isWin32
-  const command = isWin32 ? 'cmd' : cmd
-  const cmdArgs = isWin32 ? ['/c', cmd].concat(args) : args
-  return cp.spawn(command, args, options)
-}
+// function spawn(cmd, args, options){
+//   const isWin32 = process.isWin32
+//   const command = isWin32 ? 'cmd' : cmd
+//   const cmdArgs = isWin32 ? ['/c', cmd].concat(args) : args
+//   return cp.spawn(command, cmdArgs, options)
+// }
 
 async function exec(...args) {
 
@@ -56,7 +56,7 @@ async function exec(...args) {
     log.verbose('generate package', pkg)
   } else {
     // 从缓存中加载包
-    const storePath = path.resolve(process.env.CLI_HOME_PATH, DEPENDS_PATH)
+    const storePath = path.resolve(process.env.CLI_HOME_PATH, TEMPLATE_PATH)
     if (!fs.existsSync(storePath)) {
       fs.mkdirSync(storePath)
     }
@@ -69,31 +69,19 @@ async function exec(...args) {
       log.info('pkg exist')
       const isNewest = await pkg.checkNewestVersion()
       if (!isNewest) {
-        pkg.update()
+        await pkg.update()
       }
     } else {
-      pkg.install()
+      await pkg.install()
     }
   }
   const rootFilePath = pkg.getRootFilePath()
   log.verbose('command rootFilePath: ', rootFilePath)
   if (rootFilePath) {
-    // require(rootFilePath)(...args)
-    
-    // const simpleArgs = getSimpleArgs(args)
     const simpleArgs = args.slice(0, args.length - 1)
     const code = `require('${rootFilePath}')(...${JSON.stringify(simpleArgs)})`
-    const child = spawn('node', ['-e', code], {
-      cwd: process.cwd(),
-      stdio: 'inherit'
-    })
-    child.on('error', e => {
-      process.exit(e)
-    })
-    child.on('exit', () => {
-      log.verbose('command execute success!')
-      process.exit()
-    })
+    spawn('node', ['-e', code])
+    log.info('command exec success!')
   }
 }
 

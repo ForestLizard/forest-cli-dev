@@ -1,6 +1,6 @@
 {
   "name": "@forest-cli-dev/init",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "> TODO: description",
   "author": "Tyrion <tyrionliu@lilith>",
   "homepage": "https://github.com/ForestLizard/forest-cli-dev/tree/main/packages/init#readme",
@@ -28,8 +28,11 @@
   },
   "dependencies": {
     "@forest-cli-dev/command": "^0.0.1",
+    "@forest-cli-dev/package": "^0.0.1",
     "@forest-cli-dev/utils": "^0.3.0",
+    "ejs": "^3.1.8",
     "fs-extra": "^11.1.0",
-    "inquirer": "^9.1.4"
+    "inquirer": "^8.0.0",
+    "semver": "^7.3.8"
   }
 }
