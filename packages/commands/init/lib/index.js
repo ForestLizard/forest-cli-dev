@@ -40,8 +40,8 @@ class Init extends Command {
         console.log('pro', projectInfo)
     }
 
-    async installProject(templateNpmName) {
-        const installCmd = this.templates.find(item => item.npmName === templateNpmName)?.installCmd
+    async installProject() {
+        const installCmd = this.templates.find(item => item.npmName === this.projectInfo.projectTemplate)?.installCmd
         const installCmdArr = installCmd.split(' ')
         await spawn(installCmdArr[0], installCmdArr.slice(1))
     }
@@ -130,7 +130,7 @@ class Init extends Command {
             // esj模版渲染
             await this.ejsRender()
             // 依赖安装（pnpm）
-            // await this.installProject(templateNpmName)
+            await this.installProject()
 
         } else {
             log.info('tt', TYPE_COMPONENT)
