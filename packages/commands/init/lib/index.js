@@ -11,62 +11,28 @@ const glob = require('glob')
 const ejs = require('ejs')
 
 
-// function init(projectName, options) {
-//     // TODO
-//     console.log(projectName, options.force, process.env.CLI_TARGET_PATH)
-// }
+
 
 const TYPE_PROJECT = 'project'
-const TYPE_COMPONENT = 'compenent'
+const TYPE_COMPONENT = 'component'
 
 const TEMPLATE_PATH = './templates'
 
 class Init extends Command {
     constructor(...args) {
         super(...args)
-        this.projectName = null
+        // this.projectName = null
         this.templates = null
+        this.projectInfo = null
+        this.componentInfo = null
     }
 
     init() {
-        this.projectName = this.commandParam
+        // this.projectName = this.commandParam
     }
 
     async exec() {
-        // 获取模版信息
-        const ret = await this.prepare()
-        if (!ret) return
-        const projectInfo = await this.getProjectInfo()
-        console.log('pro', projectInfo)
-    }
-
-    async installProject() {
-        const installCmd = this.templates.find(item => item.npmName === this.projectInfo.projectTemplate)?.installCmd
-        const installCmdArr = installCmd.split(' ')
-        await spawn(installCmdArr[0], installCmdArr.slice(1))
-    }
-
-    async ejsRender(){
-        const cwd = process.cwd()
-        const files = await globAsync('**/package.json', {
-            ignore: ['node_modules/**', 'public/**'],
-            cwd,
-            nodir: true
-        })
-        await files.forEach(file => {
-            const filename = path.resolve(cwd, file)
-            ejs.renderFile(filename, {
-                project: {
-                    name: this.projectInfo.projectName,
-                    version: this.projectInfo.projectVersion
-                }
-            }, {}, function(err, str){
-                fs.writeFile(filename, str, ()=> {})
-            });
-        })
-    }
-
-    async getProjectInfo() {
+        
         // 选择创建的是组件还是项目
         const { type } = await inquirer.prompt({
             type: 'rawlist',
@@ -84,63 +50,125 @@ class Init extends Command {
                 }
             ]
         })
-        // 获取项目的基本信息
-        let info = {}
-        if (type === TYPE_PROJECT) {
-            info = await inquirer.prompt([
-                {
-                    type: 'input',
-                    message: '请输入项目名称',
-                    name: 'projectName',
-                },
-                {
-                    type: 'input',
-                    message: '请输入项目版本号',
-                    name: 'projectVersion',
-                    validate: function (value) {
-                        // return !!semver.valid(value)
-                        const done = this.async();
-                        // Do async stuff
-                        setTimeout(function () {
-                            if (!semver.valid(value)) {
-                                done('请输入正确版本号');
-                                return;
-                            }
-                            done(null, true);
-                        });
-                    }
-                },
-                {
-                    type: 'rawlist',
-                    message: '请选择项目模版',
-                    name: 'projectTemplate',
-                    // default: TYPE_PROJECT,
-                    choices: this.templates.map(item => ({
-                        name: item.name,
-                        value: item.npmName
-                    }))
-                }
-            ])
-            this.projectInfo = {
-                ...info
-            }
-            const targetPath = await this.checkTemplatePackage()
-            const cwdPath = process.cwd()
-            fse.copySync(path.resolve(targetPath, './template'), cwdPath)
-            // esj模版渲染
-            await this.ejsRender()
-            // 依赖安装（pnpm）
-            await this.installProject()
-
-        } else {
-            log.info('tt', TYPE_COMPONENT)
-        }
-        this.projectInfo = {
-            ...info,
-            type
+        this.type = type
+        if(type === TYPE_PROJECT){
+            const ret = await this.prepare()
+            if (!ret) return
+            await this.fetchTemplateInfo()
+            await this.initProject()
+        }else{
+            await this.fetchTemplateInfo()
+            await this.initCommponent()
         }
     }
 
+    async fetchTemplateInfo(){
+        const { type } = this
+        const { data: templates } = await request(`/${type}/getTemplate`)
+        if (!templates?.length) {
+            throw Error('模版不存在')
+        }
+        this.templates = templates
+    }
+
+    async initProject(){
+        const info = await inquirer.prompt([
+            {
+                type: 'input',
+                message: '请输入项目名称',
+                name: 'name',
+            },
+            {
+                type: 'input',
+                message: '请输入项目版本号',
+                name: 'version',
+                validate: function (value) {
+                    // return !!semver.valid(value)
+                    const done = this.async();
+                    // Do async stuff
+                    setTimeout(function () {
+                        if (!semver.valid(value)) {
+                            done('请输入正确版本号');
+                            return;
+                        }
+                        done(null, true);
+                    });
+                }
+            },
+            {
+                type: 'rawlist',
+                message: '请选择项目模版',
+                name: 'template',
+                // default: TYPE_PROJECT,
+                choices: this.templates.map(item => ({
+                    name: item.name,
+                    value: item.npmName
+                }))
+            }
+        ])
+        this.projectInfo = {
+            ...info,
+        }
+        const targetPath = await this.checkTemplatePackage()
+        const cwdPath = process.cwd()
+        fse.copySync(path.resolve(targetPath, './template'), cwdPath)
+        // esj模版渲染
+        await this.ejsRender()
+        // 依赖安装（pnpm）
+        await this.installProject()
+    }
+
+    async initCommponent(){
+        const info = await inquirer.prompt([
+            {
+                type: 'rawlist',
+                message: '请选择组件',
+                name: 'template',
+                // default: TYPE_PROJECT,
+                choices: this.templates.map(item => ({
+                    name: item.name,
+                    value: item.npmName
+                }))
+            }
+        ])
+        this.componentInfo = {
+            ...info,
+        }
+        const componentName = this.templates.find(item => item.npmName === this.componentInfo.template)?.componentName
+        const targetPath = await this.checkTemplatePackage()
+        const cwdPath = process.cwd()
+        const comPath = path.resolve(cwdPath, componentName)
+        fs.mkdirSync(comPath)
+        fse.copySync(path.resolve(targetPath, './template'), comPath)
+    }
+
+    async installProject() {
+        const installCmd = this.templates.find(item => item.npmName === this.projectInfo.template)?.installCmd
+        const installCmdArr = installCmd.split(' ')
+        await spawn(installCmdArr[0], installCmdArr.slice(1))
+    }
+
+    async ejsRender(){
+        const cwd = process.cwd()
+        const files = await globAsync('**/package.json', {
+            ignore: ['node_modules/**', 'public/**'],
+            cwd,
+            nodir: true
+        })
+        await files.forEach(file => {
+            const filename = path.resolve(cwd, file)
+            ejs.renderFile(filename, {
+                project: {
+                    name: this.projectInfo.name,
+                    version: this.projectInfo.version
+                }
+            }, {}, function(err, str){
+                fs.writeFile(filename, str, ()=> {})
+            });
+        })
+    }
+
+   
     async checkTemplatePackage() {
         const storePath = path.resolve(process.env.CLI_HOME_PATH, TEMPLATE_PATH)
         console.log('CLI_HOME_PATH', process.env.CLI_HOME_PATH, TEMPLATE_PATH)
@@ -148,7 +176,7 @@ class Init extends Command {
             fs.mkdirSync(storePath)
         }
         const pkg = new Package({
-            packageName: this.projectInfo.projectTemplate,
+            packageName: this.type === TYPE_PROJECT ? this.projectInfo.template : this.componentInfo.template,
             // packageName: '@forest-cli-dev/init',
             storePath
         })
@@ -166,12 +194,6 @@ class Init extends Command {
     async prepare() {
         const cwd = process.cwd() // === path.resolve('./')
         log.info('current cwd: ', cwd)
-        const { data: templates } = await request('/project/getTemplate')
-        console.log('templates', templates)
-        if (!templates?.length) {
-            throw Error('项目模版不存在')
-        }
-        this.templates = templates
         const files = fs.readdirSync(cwd)
         if (files?.length) {
             if (!this.options.force) {

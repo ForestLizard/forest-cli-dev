@@ -5,7 +5,8 @@ const path = require('path')
 const { execSync } = require('child_process');
 const npminstall = require('npminstall')
 const semver = require('semver')
-const { isObject, getNpmVersions, log } = require('@forest-cli-dev/utils')
+const { isObject, getNpmVersions, log } = require('@forest-cli-dev/utils');
+const npmlog = require('@forest-cli-dev/utils/lib/log');
 // const formatPath = require('@forest-cli-dev/utils/lib/formatPath')
 
 class Package {
@@ -34,6 +35,7 @@ class Package {
         if(!this.storePath){
             throw Error('必须在缓存模式下使用')
         }
+        npmlog.info('正在安装：', this.packageName)
         await npminstall({
             root: this.storePath,
             pkgs: [
@@ -69,7 +71,7 @@ class Package {
         const pkgPath = path.resolve(this.storePath, 'node_modules', this.packageName)
         execSync(`rm -rf ${pkgPath}`)
         log.info('remove expired version success')
-        await this.npminstall()
+        await this.install()
     }
 
     getRootFilePath() {

@@ -11,7 +11,8 @@ async function getNpmVersions(packageName) {
     const status = String(response.status)
     if(!status.startsWith('2')) throw Error(JSON.stringify(response))
     const versions = Object.keys(response.data.versions)
-    versions.sort((a, b) => semver.gt(b, a))
+    versions.reverse()
+    // versions.sort((a, b) => semver.gt(b, a))// ???
     return versions
   } catch (error) {
     npmlog.error('获取package版本信息失败', error.message)
