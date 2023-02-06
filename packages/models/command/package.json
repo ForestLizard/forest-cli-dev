@@ -1,6 +1,6 @@
 {
   "name": "@forest-cli-dev/command",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Command class",
   "author": "Tyrion <tyrionliu@lilith>",
   "homepage": "https://github.com/ForestLizard/forest-cli-dev/tree/main/packages/command#readme",
@@ -27,6 +27,6 @@
     "url": "https://github.com/ForestLizard/forest-cli-dev/issues"
   },
   "dependencies": {
-    "@forest-cli-dev/utils": "^0.3.0"
+    "@forest-cli-dev/utils": "^0.4.0"
   }
 }

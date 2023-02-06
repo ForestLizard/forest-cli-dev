@@ -27,9 +27,9 @@
     "url": "https://github.com/ForestLizard/forest-cli-dev/issues"
   },
   "dependencies": {
-    "@forest-cli-dev/command": "^0.0.1",
-    "@forest-cli-dev/package": "^0.0.1",
-    "@forest-cli-dev/utils": "^0.3.0",
+    "@forest-cli-dev/command": "^0.0.2",
+    "@forest-cli-dev/package": "^1.0.2",
+    "@forest-cli-dev/utils": "^0.4.0",
     "ejs": "^3.1.8",
     "fs-extra": "^11.1.0",
     "inquirer": "^8.0.0",
