@@ -82,6 +82,10 @@ const registerCommand = () => {
         .option('-F --force')
         .action(exec)
 
+    program.command('publish [iu]')
+    .option('-A --aaa')
+    .action(exec)
+
 
     // 监听未知命令
     program.on('command:*', (obj) => {

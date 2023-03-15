@@ -1,0 +1,33 @@
+{
+  "name": "@forest-cli-dev/publish",
+  "version": "0.0.1",
+  "description": "> TODO: description",
+  "author": "forestlizard <lzk19930814@163.com>",
+  "homepage": "https://github.com/ForestLizard/forest-cli-dev/tree/main/packages/commands/publish#readme",
+  "license": "ISC",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ForestLizard/forest-cli-dev.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/ForestLizard/forest-cli-dev/issues"
+  },
+  "dependencies": {
+    "@forest-cli-dev/command": "^0.0.2",
+    "@forest-cli-dev/git": "^0.0.1",
+    "@forest-cli-dev/utils": "^0.4.0",
+    "inquirer": "8.0.0",
+    "terminal-link": "2.1.1"
+  }
+}

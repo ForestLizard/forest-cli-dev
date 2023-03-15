@@ -194,7 +194,7 @@ class Init extends Command {
     async prepare() {
         const cwd = process.cwd() // === path.resolve('./')
         log.info('current cwd: ', cwd)
-        const files = fs.readdirSync(cwd)
+        const files = fs.readdirSync(cwd).filter(item => item !== '.git')
         if (files?.length) {
             if (!this.options.force) {
                 const { isContinue } = await inquirer.prompt({
@@ -204,7 +204,14 @@ class Init extends Command {
                 })
                 if (!isContinue) return false
             }
-            fse.emptyDirSync(cwd)
+            // fse.emptyDirSync(cwd)
+            files.forEach(item => {
+                if(fs.statSync(item).isDirectory()){
+                    fs.rmdirSync(item)
+                }else{
+                    fs.unlinkSync(item)
+                }
+            })
         }
 
         return true

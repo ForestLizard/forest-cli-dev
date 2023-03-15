@@ -6,7 +6,8 @@ const Package = require('@forest-cli-dev/package')
 const { log, spawn } = require('@forest-cli-dev/utils')
 
 const PACKAGE_NAME_SETTING = {
-  'init': '@forest-cli-dev/init'
+  'init': '@forest-cli-dev/init',
+  'publish': '@forest-cli-dev/publish'
 }
 
 const TEMPLATE_PATH = './dependences'
