@@ -26,7 +26,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "6482827d9a4198b6d349be141b3040bd4db432d7",
+  "gitHead": "e5963d994a0d39859cb269760f1e9c2463df96a5",
   "dependencies": {
     "axios": "^1.2.1",
     "npmlog": "^6.0.2",

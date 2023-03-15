@@ -32,5 +32,6 @@
     "npminstall": "^6.6.2",
     "pkg-dir": "^7.0.0",
     "semver": "^7.3.8"
-  }
+  },
+  "gitHead": "e5963d994a0d39859cb269760f1e9c2463df96a5"
 }
