@@ -1,6 +1,6 @@
 {
   "name": "@forest-cli-dev/git",
-  "version": "0.0.1",
+  "version": "3.1.0",
   "description": "> TODO: description",
   "author": "forestlizard <lzk19930814@163.com>",
   "homepage": "https://github.com/ForestLizard/forest-cli-dev/tree/main/packages/models/git#readme",
@@ -27,7 +27,7 @@
     "url": "https://github.com/ForestLizard/forest-cli-dev/issues"
   },
   "dependencies": {
-    "@forest-cli-dev/utils": "^0.4.0",
+    "@forest-cli-dev/utils": "^3.1.0",
     "axios": "^1.3.4",
     "fs-extra": "^11.1.0",
     "inquirer": "8.0.0",
