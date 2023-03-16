@@ -1,6 +1,6 @@
 {
   "name": "@forest-cli-dev/publish",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "> TODO: description",
   "author": "forestlizard <lzk19930814@163.com>",
   "homepage": "https://github.com/ForestLizard/forest-cli-dev/tree/main/packages/commands/publish#readme",
@@ -24,9 +24,9 @@
     "url": "https://github.com/ForestLizard/forest-cli-dev/issues"
   },
   "dependencies": {
-    "@forest-cli-dev/command": "^3.1.0",
-    "@forest-cli-dev/git": "^3.1.0",
-    "@forest-cli-dev/utils": "^3.1.0",
+    "@forest-cli-dev/command": "^3.1.1",
+    "@forest-cli-dev/git": "^3.1.1",
+    "@forest-cli-dev/utils": "^3.1.1",
     "inquirer": "8.0.0",
     "terminal-link": "2.1.1"
   },
