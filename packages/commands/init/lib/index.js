@@ -71,6 +71,15 @@ class Init extends Command {
         this.templates = templates
     }
 
+    async renameHiddenFiles(){
+        const cwdPath = process.cwd()
+        const hiddenFiles = ['gitignore', 'eslint', 'eslintignore']
+        const files = fs.readdirSync(cwdPath)
+        files.filter(item => hiddenFiles.includes(item)).forEach(item => {
+            fs.renameSync(item, `.${item}`)
+        })
+    }
+
     async initProject(){
         const info = await inquirer.prompt([
             {
@@ -112,8 +121,11 @@ class Init extends Command {
         const targetPath = await this.checkTemplatePackage()
         const cwdPath = process.cwd()
         fse.copySync(path.resolve(targetPath, './template'), cwdPath)
+        // 隐藏文件重命名，npm发布时无法发布隐藏文件
+        await this.renameHiddenFiles()
         // esj模版渲染
         await this.ejsRender()
+        log.success('项目安装完成，开始安装依赖...')
         // 依赖安装（pnpm）
         await this.installProject()
     }
@@ -206,11 +218,14 @@ class Init extends Command {
             }
             // fse.emptyDirSync(cwd)
             files.forEach(item => {
-                if(fs.statSync(item).isDirectory()){
-                    fs.rmdirSync(item)
-                }else{
-                    fs.unlinkSync(item)
-                }
+                // if(fs.statSync(item).isDirectory()){
+                //     fse.rm
+                // }else{
+                //     fs.unlinkSync(item)
+                // }
+                fse.rmSync(item, {
+                    recursive: true
+                })
             })
         }
 
