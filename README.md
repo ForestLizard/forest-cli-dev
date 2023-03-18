@@ -16,10 +16,11 @@ npm install @forest-cli-dev/core -g
 
 forest-cli init 
 项目/组件初始化
-
+![forest-cli init](/asserts/init@2x.png)
 
 forest-cli publish
 执行git-flow流程
+![forest-cli publish](/asserts/publish@2x.png)
 
 forest-cli -h
 查看帮助文档
