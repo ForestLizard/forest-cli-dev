@@ -17,6 +17,7 @@ npm install @forest-cli-dev/core -g
 forest-cli init 
 项目/组件初始化
 
+
 forest-cli publish
 执行git-flow流程
 

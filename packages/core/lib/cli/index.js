@@ -78,13 +78,15 @@ const registerCommand = () => {
     })
 
     // 注册command
-    program.command('init')
+    program.command('init [options]')
         .option('-F --force')
+        .description('初始化项目/组件')
         .action(exec)
 
     program.command('publish')
-    .option('-A --aaa')
-    .action(exec)
+        .description('执行git-flow')
+        // .option('-A --aaa')
+        .action(exec)
 
 
     // 监听未知命令
