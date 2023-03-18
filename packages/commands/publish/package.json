@@ -13,6 +13,9 @@
   "files": [
     "lib"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ForestLizard/forest-cli-dev.git"
@@ -30,5 +33,5 @@
     "inquirer": "8.0.0",
     "terminal-link": "2.1.1"
   },
-  "gitHead": "e5963d994a0d39859cb269760f1e9c2463df96a5"
+  "gitHead": "4e0914026423b5185365387a968944d4f5ff0811"
 }

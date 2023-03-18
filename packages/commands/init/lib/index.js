@@ -64,7 +64,34 @@ class Init extends Command {
 
     async fetchTemplateInfo(){
         const { type } = this
-        const { data: templates } = await request(`/${type}/getTemplate`)
+        // const { data: templates } = await request(`/${type}/getTemplate`)
+        // 实际使用时，需部署一个服务用于存储模板信息，模板信息与npm @forest-cli-dev-template-project/里的模板一致
+        const { data: templates } = type === 'project' ? {
+            data: [
+                {
+                    name: 'create-react-app模板',
+                    npmName: '@forest-cli-dev-template-project/create-react-app',
+                    installCmd: 'pnpm install'
+                },
+                {
+                    name: 'next.js模板',
+                    npmName: '@forest-cli-dev-template-project/next',
+                    installCmd: 'pnpm install'
+                }
+            ],
+            msg: '',
+            code: 0,
+        } : {
+            data: [
+                {
+                    name: 'ListPage',
+                    npmName: '@forest-cli-dev-template-component/list-page',
+                    componentName: 'ListPage'
+                },
+            ],
+            msg: '',
+            code: 0,
+        }
         if (!templates?.length) {
             throw Error('模版不存在')
         }
