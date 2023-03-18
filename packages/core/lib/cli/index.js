@@ -78,11 +78,11 @@ const registerCommand = () => {
     })
 
     // 注册command
-    program.command('init [projectName]')
+    program.command('init')
         .option('-F --force')
         .action(exec)
 
-    program.command('publish [iu]')
+    program.command('publish')
     .option('-A --aaa')
     .action(exec)
 
